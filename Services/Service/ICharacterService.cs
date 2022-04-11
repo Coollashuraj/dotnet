@@ -12,5 +12,6 @@ namespace dotnet.Services.Service
         Task<ServiceResponse<List<GetCharacterDto>>> GetAllCharacters();
         Task<ServiceResponse<GetCharacterDto>> getSingle(int id);
         Task<ServiceResponse<List<GetCharacterDto>>> create(AddCharacterDto newCharacter);
+        Task<ServiceResponse<List<GetCharacterDto>>> updatecharacter(UpdateCharacterDto updatedCharacter);
     }
 }

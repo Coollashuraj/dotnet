@@ -33,7 +33,7 @@ namespace dotnet.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<ServiceResponse<GetCharacterDto>>> GetSingle(int id)
         {
-
+            Console.WriteLine("ThreadStart");
             return Ok(await _characterService.getSingle(id));
 
         }
@@ -43,6 +43,17 @@ namespace dotnet.Controllers
         {
 
             return Ok(await _characterService.create(newCharacter));
+        }
+
+        [HttpPut]
+        public async Task<ActionResult<ServiceResponse<GetCharacterDto>>> UpdateCharacter(UpdateCharacterDto updatedCharacter)
+        {
+            var response = await _characterService.updatecharacter(updatedCharacter);
+            if (response.Data == null)
+            {
+                return NotFound(response);
+            }
+            return Ok(response);
         }
     }
 }

@@ -16,8 +16,8 @@ namespace dotnet.Services.Service
             _mapper = mapper;
         }
         private static List<Character> characters = new List<Character>
-         { new Character(),
-          new Character { Id = 1, Name = "sam" } };
+          { new Character(),
+           new Character { Id = 1, Name = "sam" } };
 
         public async Task<ServiceResponse<List<GetCharacterDto>>> create(AddCharacterDto newCharacter)
 
@@ -43,5 +43,38 @@ namespace dotnet.Services.Service
             ServiceResponse.Data = _mapper.Map<GetCharacterDto>(characters[0]);
             return ServiceResponse;
         }
+
+        public async Task<ServiceResponse<GetCharacterDto>> updatecharacter(UpdateCharacterDto updatedCharacter)
+        {
+            var ServiceResponse = new ServiceResponse<GetCharacterDto>();
+            try
+            {
+                Character character = characters.FirstOrDefault(c => c.Id == updatedCharacter.Id);
+
+                if (character.Id == 0)
+                {
+                    character.Name = updatedCharacter.Name;
+                    character.Points = updatedCharacter.Points;
+
+                    character.Class = updatedCharacter.Class;
+
+
+                    ServiceResponse.Data = _mapper.Map<GetCharacterDto>(character);
+                }
+                else
+                {
+                    ServiceResponse.Success = false;
+                    ServiceResponse.Message = "Character not found.";
+                }
+            }
+            catch (Exception ex)
+            {
+                ServiceResponse.Success = false;
+                ServiceResponse.Message = ex.Message;
+            }
+            return ServiceResponse;
+        }
+
+
     }
 }
